@@ -6,8 +6,9 @@ matrix:
     - os: osx
 
 env:
-  - TWINE_USERNAME=joerick
-  - TWINE_PASSWORD=from-travis-settings
+  global:
+    - TWINE_USERNAME=joerick
+    - TWINE_PASSWORD=from-travis-settings
 
 script:
   - pip install cibuildwheel==0.2.0
