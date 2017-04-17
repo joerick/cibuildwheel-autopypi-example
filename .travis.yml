@@ -1,0 +1,23 @@
+matrix:
+  include:
+    - sudo: required
+      services:
+        - docker
+    - os: osx
+
+env:
+  - TWINE_USERNAME=joerick
+  - TWINE_PASSWORD
+
+script:
+  - pip install cibuildwheel==0.2.0
+  - cibuildwheel --output-dir wheelhouse
+
+deploy:
+  provider: script
+  script:
+    - pip install twine
+    - twine upload 
+  on:
+    tags: true
+    all_branches: true
