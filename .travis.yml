@@ -7,7 +7,7 @@ matrix:
 
 env:
   - TWINE_USERNAME=joerick
-  - TWINE_PASSWORD
+  - TWINE_PASSWORD=from-travis-settings
 
 script:
   - pip install cibuildwheel==0.2.0
@@ -17,7 +17,6 @@ deploy:
   provider: script
   script:
     - pip install twine
-    - twine upload 
+    - twine upload wheelhouse/*.whl
   on:
     tags: true
-    all_branches: true
