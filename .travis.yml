@@ -16,8 +16,8 @@ script:
   - |
     set -o errexit
     if [[ $TRAVIS_TAG ]]; then
-      pip install twine
-      twine upload wheelhouse/*.whl
+      python -m pip install twine
+      python -m twine upload wheelhouse/*.whl
     else
       echo "Skipping wheel upload to PyPI because this is not a tag build"
     fi
