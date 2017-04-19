@@ -14,11 +14,11 @@ script:
   - pip install cibuildwheel==0.2.0
   - cibuildwheel --output-dir wheelhouse
 
-deploy:
-  provider: script
-  script:
-    - pip install twine
-    - twine upload wheelhouse/*.whl
-  skip_cleanup: true
-  on:
-    tags: true
+after_success:
+  - |
+    if [[ $TRAVIS_TAG ]]; then
+      pip install twine
+      twine upload wheelhouse/*.whl
+    else
+      echo "Skipping wheel upload to PyPI because this is not a tag build"
+    fi
