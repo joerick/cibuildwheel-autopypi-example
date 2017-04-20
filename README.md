@@ -4,19 +4,23 @@ cibuildwheel auto-deploy to PyPI example
 Travis setup
 ------------
 
-- Add to your `.travis.yml`
+- Add an `env` section to your `.travis.yml`
 
         env:
-          - TWINE_USERNAME=...your pypi username...
-          # Note: TWINE_PASSWORD is set in Travis settings
+          global:
+            - TWINE_USERNAME=...your pypi username...
+            # Note: TWINE_PASSWORD is set in Travis settings
 
-        deploy:
-          provider: script
-          script:
-            - pip install twine
-            - twine upload wheelhouse/*.whl
-          on:
-            tags: true
+  And add an upload step to the `script` section
+
+        script:
+          - pip install cibuildwheel==x.x.x
+          - cibuildwheel --output-dir wheelhouse
+          - |
+            if [[ $TRAVIS_TAG ]]; then
+              python -m pip install twine
+              python -m twine upload wheelhouse/*.whl
+            fi
 
 - In the Travis web UI, go to your project settings and add the environment variable TWINE_PASSWORD, set to your PyPI password.
 
