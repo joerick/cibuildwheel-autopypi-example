@@ -5,11 +5,11 @@ environment:
 build_script:
   - pip install cibuildwheel==0.2.0
   - cibuildwheel --output-dir wheelhouse
-  - |
-    IF NOT "%APPVEYOR_REPO_TAG%"=="" (
-      python -m pip install twine
-      python -m twine upload wheelhouse\*.whl
-    )
+  - cmd: >-
+      IF NOT "%APPVEYOR_REPO_TAG%"=="" (
+        python -m pip install twine
+        python -m twine upload wheelhouse\*.whl
+      )
 artifacts:
   - path: "wheelhouse\\*.whl"
     name: Wheels
