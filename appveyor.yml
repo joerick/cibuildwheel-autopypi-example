@@ -1,3 +1,7 @@
+environment:
+  TWINE_USERNAME: joerick
+  # Note: TWINE_PASSWORD is set in Appveyor settings
+
 build_script:
   - pip install cibuildwheel==0.2.0
   - cibuildwheel --output-dir wheelhouse
