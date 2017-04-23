@@ -22,20 +22,33 @@ Travis setup
               python -m twine upload wheelhouse/*.whl
             fi
 
-- In the Travis web UI, go to your project settings and add the environment variable TWINE_PASSWORD, set to your PyPI password.
+  Check this repo's [.travis.yml](.travis.yml) as an example.
+
+- In the Travis web UI, go to your project settings and add the environment variable `TWINE_PASSWORD`, set to your PyPI password.
 
 Appveyor setup
 --------------
 
-- Add this to your appveyor.yml
+- Add this env to your appveyor.yml
 
-		environment:
-		  TWINE_USERNAME: joerick
-		  # Note: TWINE_PASSWORD is set in Appveyor settings
-		
-		deploy_script:
-		  - pip install twine
-		  - twine upload wheelhouse/*.whl
+        environment:
+          TWINE_USERNAME: ...your pypi username...
+          # Note: TWINE_PASSWORD is set in Appveyor settings
+
+    Add this upload step to the `build_script`:
+
+        build_script:
+          - pip install cibuildwheel==x.x.x
+          - cibuildwheel --output-dir wheelhouse
+          - ps: >-
+              if ($env:APPVEYOR_REPO_TAG -eq "true") {
+                python -m pip install twine
+                python -m twine upload (resolve-path wheelhouse\*.whl)
+              }
+
+  Check this repo's [appveyor.yml](appveyor.yml) as an example.
+
+- In the Appveyor UI, add your PyPI password as `TWINE_PASSWORD` (click Settings > Environment > Add Variable...). Make sure to mark it as private!
 
 On each release
 ---------------
