@@ -4,9 +4,10 @@ build_script:
   - pip install cibuildwheel==0.2.0
   - cibuildwheel --output-dir wheelhouse
   - |
-    IF "%APPVEYOR_REPO_TAG%" == "true" EXIT /B 0
+    IF NOT "%APPVEYOR_REPO_TAG%" == "true" EXIT /B 0
     python -m pip install twine
     python -m twine upload wheelhouse/*.whl
+  - echo "We can still work"
 artifacts:
   - path: "wheelhouse\\*.whl"
     name: Wheels
