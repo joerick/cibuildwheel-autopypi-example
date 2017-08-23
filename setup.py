@@ -1,7 +1,9 @@
+import os
+
 from setuptools import setup, Extension
 
 setup(
-    name="cibuildwheel_autopypi_example",
+    name="cibuildwheel_autopypi_example_mayeut",
     ext_modules=[Extension('cibuildwheel_autopypi_example', sources=['cibuildwheel_autopypi_example.c'])],
-    version="0.1.11",
+    version=os.environ.get('APPVEYOR_BUILD_VERSION', '0.1.11'),
 )
