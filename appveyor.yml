@@ -1,13 +1,12 @@
 # Note: TWINE_PASSWORD and TWINE_USERNAME are set in Appveyor settings
 
 build_script:
-  - echo "%TWINE_USERNAME%"
   - pip install cibuildwheel==0.2.0
   - cibuildwheel --output-dir wheelhouse
   - ps: >-
       if ($env:APPVEYOR_REPO_TAG -ne "true") {
         python -m pip install twine
-        python -m twine upload wheelhouse/*.whl
+        python -m twine upload (resolve-path wheelhouse\*.whl)
       }
 artifacts:
   - path: "wheelhouse\\*.whl"
