@@ -6,8 +6,8 @@ build_script:
   - cibuildwheel --output-dir wheelhouse
   - ps: >-
       if ($env:APPVEYOR_REPO_TAG -ne "true") {
-        Invoke-Expression "python -m pip install twine"
-        Invoke-Expression "python -m twine upload --skip-existing wheelhouse/*.whl"
+        python -m pip install twine
+        python -m twine upload wheelhouse/*.whl
       }
 artifacts:
   - path: "wheelhouse\\*.whl"
