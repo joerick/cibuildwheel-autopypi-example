@@ -40,11 +40,13 @@ Appveyor setup
       build_script:
         - pip install cibuildwheel==x.x.x
         - cibuildwheel --output-dir wheelhouse
-        - ps: >-
-            if ($env:APPVEYOR_REPO_TAG -eq "true") {
-              python -m pip install twine
-              python -m twine upload (resolve-path wheelhouse\*.whl)
-            }
+        - >
+          IF "%APPVEYOR_REPO_TAG%" == "true"
+          (
+          python -m pip install twine
+          &&
+          python -m twine upload wheelhouse/*.whl
+          )
 
   Check this repo's [appveyor.yml](appveyor.yml) as an example.
 
