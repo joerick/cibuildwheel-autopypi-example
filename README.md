@@ -6,21 +6,21 @@ Travis setup
 
 - Add an `env` section to your `.travis.yml`
 
-        env:
-          global:
-            - TWINE_USERNAME=...your pypi username...
-            # Note: TWINE_PASSWORD is set in Travis settings
+      env:
+        global:
+          - TWINE_USERNAME=...your pypi username...
+          # Note: TWINE_PASSWORD is set in Travis settings
 
   And add an upload step to the `script` section
 
-        script:
-          - pip install cibuildwheel==x.x.x
-          - cibuildwheel --output-dir wheelhouse
-          - |
-            if [[ $TRAVIS_TAG ]]; then
-              python -m pip install twine
-              python -m twine upload wheelhouse/*.whl
-            fi
+      script:
+        - pip install cibuildwheel==x.x.x
+        - cibuildwheel --output-dir wheelhouse
+        - |
+          if [[ $TRAVIS_TAG ]]; then
+            python -m pip install twine
+            python -m twine upload wheelhouse/*.whl
+          fi
 
   Check this repo's [.travis.yml](.travis.yml) as an example.
 
@@ -31,20 +31,20 @@ Appveyor setup
 
 - Add this env to your appveyor.yml
 
-        environment:
-          TWINE_USERNAME: ...your pypi username...
-          # Note: TWINE_PASSWORD is set in Appveyor settings
+      environment:
+        TWINE_USERNAME: ...your pypi username...
+        # Note: TWINE_PASSWORD is set in Appveyor settings
 
     Add this upload step to the `build_script`:
 
-        build_script:
-          - pip install cibuildwheel==x.x.x
-          - cibuildwheel --output-dir wheelhouse
-          - ps: >-
-              if ($env:APPVEYOR_REPO_TAG -eq "true") {
-                python -m pip install twine
-                python -m twine upload (resolve-path wheelhouse\*.whl)
-              }
+      build_script:
+        - pip install cibuildwheel==x.x.x
+        - cibuildwheel --output-dir wheelhouse
+        - ps: >-
+            if ($env:APPVEYOR_REPO_TAG -eq "true") {
+              python -m pip install twine
+              python -m twine upload (resolve-path wheelhouse\*.whl)
+            }
 
   Check this repo's [appveyor.yml](appveyor.yml) as an example.
 
