@@ -2,10 +2,10 @@ language: python
 
 matrix:
   include:
-    - sudo: required
-      services:
-        - docker
+    # perform a linux build
+    - services: docker
       env: PIP=pip
+    # and a mac build
     - os: osx
       language: generic
       env: PIP=pip2
