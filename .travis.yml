@@ -25,8 +25,7 @@ install:
 script:
   # build the wheels, put them into './wheelhouse'
   - python -m cibuildwheel --output-dir wheelhouse
+
+after_success:
   # if the release was tagged, upload them to PyPI
-  - |
-    if [[ $TRAVIS_TAG ]]; then
-      python -m twine upload wheelhouse/*.whl
-    fi
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload wheelhouse/*.whl; fi
