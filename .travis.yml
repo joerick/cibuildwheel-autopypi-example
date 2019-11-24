@@ -4,11 +4,9 @@ matrix:
   include:
     # perform a linux build
     - services: docker
-      env: PIP=pip
     # and a mac build
     - os: osx
       language: generic
-      env: PIP=pip2
 
 env:
   global:
@@ -16,10 +14,11 @@ env:
       # Note: TWINE_PASSWORD is set in Travis settings
 
 script:
-  - $PIP install cibuildwheel==0.7.1
-  - cibuildwheel --output-dir wheelhouse
+  - python -m pip install twine cibuildwheel==1.0.0
+  # build the wheels, put them into './wheelhouse'
+  - python -m cibuildwheel --output-dir wheelhouse
+  # if the release was tagged, upload them to PyPI
   - |
     if [[ $TRAVIS_TAG ]]; then
-      python -m pip install twine
       python -m twine upload wheelhouse/*.whl
     fi
