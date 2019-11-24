@@ -19,8 +19,10 @@ env:
     - TWINE_USERNAME=joerick
       # Note: TWINE_PASSWORD is set in Travis settings
 
-script:
+install:
   - python -m pip install twine cibuildwheel==1.0.0
+
+script:
   # build the wheels, put them into './wheelhouse'
   - python -m cibuildwheel --output-dir wheelhouse
   # if the release was tagged, upload them to PyPI
