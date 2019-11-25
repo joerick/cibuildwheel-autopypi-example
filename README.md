@@ -11,16 +11,20 @@ Travis setup
           - TWINE_USERNAME=...your pypi username...
           # Note: TWINE_PASSWORD is set in Travis settings
 
-  And add an upload step to the `script` section
+  Install `cibuildwheel` and `twine` in your `install` section
+
+      install:
+        - python -m pip install twine cibuildwheel==x.y.z
+
+  Build in the `script` section
 
       script:
-        - pip install cibuildwheel==x.x.x
-        - cibuildwheel --output-dir wheelhouse
-        - |
-          if [[ $TRAVIS_TAG ]]; then
-            python -m pip install twine
-            python -m twine upload wheelhouse/*.whl
-          fi
+        - python -m cibuildwheel --output-dir wheelhouse
+
+  Finally, upload if the build was successful
+
+       after_success:
+         - if [[ $TRAVIS_TAG ]]; then python -m twine upload wheelhouse/*.whl; fi
 
   Check this repo's [.travis.yml](.travis.yml) as an example.
 
