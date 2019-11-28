@@ -1,25 +1,31 @@
 language: python
 
-matrix:
+jobs:
   include:
-    - sudo: required
-      services:
-        - docker
-      env: PIP=pip
+    # perform a linux build
+    - services: docker
+    # and a mac build
     - os: osx
-      language: generic
-      env: PIP=pip2
+      language: shell
+    # and a windows build
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.8.0
+        - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
 
 env:
   global:
     - TWINE_USERNAME=joerick
       # Note: TWINE_PASSWORD is set in Travis settings
 
+install:
+  - python -m pip install twine cibuildwheel==1.0.0
+
 script:
-  - $PIP install cibuildwheel==0.7.1
-  - cibuildwheel --output-dir wheelhouse
-  - |
-    if [[ $TRAVIS_TAG ]]; then
-      python -m pip install twine
-      python -m twine upload wheelhouse/*.whl
-    fi
+  # build the wheels, put them into './wheelhouse'
+  - python -m cibuildwheel --output-dir wheelhouse
+
+after_success:
+  # if the release was tagged, upload them to PyPI
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload wheelhouse/*.whl; fi
