@@ -1,6 +1,6 @@
 environment:
-  TWINE_USERNAME: joerick
-  # Note: TWINE_PASSWORD is set in Appveyor settings
+  TWINE_USERNAME: __token__
+  # Note: TWINE_PASSWORD is set to an API token in Appveyor settings
 
 build_script:
   - pip install cibuildwheel==1.0.0
