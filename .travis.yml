@@ -13,6 +13,9 @@ jobs:
       before_install:
         - choco install python --version 3.8.0
         - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+        - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+        - ls /c/Python38
+        - ls /c/Python38/Scripts
 
 env:
   global:
