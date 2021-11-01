@@ -1,3 +1,12 @@
+⚠️ This repo is slightly outdated, and these days, there are better examples.
+
+For auto-deployment examples, take a look at the
+[cibuildwheel /examples folder](https://github.com/pypa/cibuildwheel/tree/main/examples),
+particularly the [Github Deploy](https://github.com/pypa/cibuildwheel/blob/main/examples/github-deploy.yml)
+example.
+
+---
+
 cibuildwheel auto-deploy to PyPI example
 ========================================
 
